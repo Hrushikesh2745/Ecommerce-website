@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ticket booking</title>
+<style>
+    body {
+    font-size: 16px;
+    background: #f9f9f9;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+form {
+    width: 300px;
+    background: #fff;
+    padding: 15px 40px 40px;
+    border: 1px solid rgb(9, 1, 1);
+    margin: 50px auto 0;
+    border-radius: 5px;
+}
+label {
+    display: block;
+    margin-bottom: 5px
+}
+label i {
+    color: #999;
+    font-size: 80%;
+}
+input, select {
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+.row {
+    padding-bottom: 10px;
+}
+.form-inline {
+    border: 1px solid rgb(242, 235, 235);
+    padding: 8px 10px 4px;
+    border-radius: 2px;
+}
+.form-inline label, .form-inline input {
+    display: inline-block;
+    width: auto;
+    padding-right: 15px;
+}
+.error {
+    color: red;
+    font-size: 90%;
+}
+input[type="submit"] {
+    font-size: 110%;
+    font-weight: 100;
+    background: #006dcc;
+    border-color: #016BC1;
+    box-shadow: 0 3px 0 #0165b6;
+    color: #fff;
+    margin-top: 10px;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background: #0165b6;
+}
+</style>
+<script>
+// Defining a function to display error message
+function printError(elemId, hintMsg) {
+    document.getElementById(elemId).innerHTML = hintMsg;
+}
+
+// Defining a function to validate form 
+function validateForm() {
+    // Retrieving the values of form elements 
+    var name = document.contactForm.name.value;
+    var email = document.contactForm.email.value;
+    var mobile = document.contactForm.mobile.value;
+    var city = document.contactForm.city.value;
+    var total = document.contactForm.total.value;
+    var gift= [];
+    var checkboxes = document.getElementsByName("movie[]");
+    for(var i=0; i < checkboxes.length; i++) {
+        if(checkboxes[i].checked) {
+            // Populate Gift array with selected values
+            gift.push(checkboxes[i].value);
+        }
+    }
+    var payment= [];
+    var checkboxes = document.getElementsByName("payment[]");
+    for(var i=0; i < checkboxes.length; i++) {
+        if(checkboxes[i].checked) {
+            // Populate payment array with selected values
+            payment.push(checkboxes[i].value);
+        }
+    }
+    
+	// Defining error variables with a default value
+    var nameErr = emailErr=mobileErr=cityErr=totalErr=giftErr=paymentErr = true;
+    
+    // Validate name
+    if(name == "") {
+        printError("nameErr", "Please enter your name");
+    } else {
+        var regex = /^[a-zA-Z\s]+$/;                
+        if(regex.test(name) === false) {
+            printError("nameErr", "Please enter a valid name");
+        } else {
+            printError("nameErr", "");
+            nameErr = false;
+        }
+    }
+    
+    // Validate email address
+    if(email == "") {
+        printError("emailErr", "Please enter your email address");
+    } else {
+        // Regular expression for basic email validation
+        var regex = /^\S+@\S+\.\S+$/;
+        if(regex.test(email) === false) {
+            printError("emailErr", "Please enter a valid email address");
+        } else{
+            printError("emailErr", "");
+            emailErr = false;
+        }
+    }
+    
+    // Validate mobile number
+    if(mobile == "") {
+        printError("mobileErr", "Please enter your mobile number");
+    } else {
+        var regex = /^[1-9]\d{9}$/;
+        if(regex.test(mobile) === false) {
+            printError("mobileErr", "Please enter a valid 10 digit mobile number");
+        } else{
+            printError("mobileErr", "");
+            mobileErr = false;
+        }
+    }
+    // Validate city
+    if(city == "Select") {
+        printError("cityErr", "Please select your city");
+    } else {
+        printError("cityErr", "");
+        cityErr = false;
+    }
+     // total amount
+     if(total == "") {
+        printError("totalErr", "Please select your ticket number");
+    } else {
+        printError("totalErr", "");
+        totalErr = false;
+    }
+      // Gift
+      if(gift== "") {
+        printError("giftErr", "Please select your ticket number");
+    } else {
+        printError("giftErr", "");
+        giftErr = false;
+    }
+      // payment
+      if(payment == "") {
+        printError("paymentErr", "Please select your ticket number");
+    } else {
+        printError("paymentErr", "");
+        paymentErr = false;
+    }
+   
+    
+    // Prevent the form from being submitted if there are any errors
+    if((nameErr || emailErr || mobileErr  || cityErr ||totalErr||gift||paymentErr ) == true) {
+       return false;
+    } else {
+        // Creating a string from input data for preview
+        var dataPreview = "You've entered the following details: \n" +
+                          "Full Name: " + name + "\n" +
+                          "Email Address: " + email + "\n" +
+                          "Mobile Number: " + mobile + "\n" +
+                          "City name: " + city + "\n";
+                          "total amount"+total+"\n";
+                          
+                          if(gift.length) {
+            dataPreview += "gift: " + gift.join(", ");
+        }
+        if(payment.length) {
+            dataPreview += "payment: " + payment.join(", ");
+        }
+        // Display input data in a dialog box before submitting the form
+        alert(dataPreview);
+    }
+};
+var res=0,numone;
+function mult()
+            {
+                numone=parseInt(document.getElementById("one").value);
+                if(numone)
+                {
+                    res=numone*200;
+                    temp=document.getElementById("res");
+                    temp.style.display="block";
+                    document.getElementById("res").innerHTML="Multiplication:-"+res
+                }
+
+            }
+            
+</script>
+</head>
+<body>
+<form name="contactForm" onsubmit="return validateForm()" action="#" method="post">
+    <h2>Order Now</h2>
+    <div class="row">
+        <label>Full Name</label>
+        <input type="text" name="name">
+        <div class="error" id="nameErr"></div>
+    </div>
+    <div class="row">
+        <label>Email Address</label>
+        <input type="text" name="email">
+        <div class="error" id="emailErr"></div>
+    </div>
+    <div class="row">
+        <label>Mobile Number</label>
+        <input type="text" name="mobile" maxlength="10">
+        <div class="error" id="mobileErr"></div>
+    </div>
+    <div class="row">
+        <label>Deliver City Name</label>
+        <select name="City">
+            <option>Select</option>
+            <option>Bhubaneswar</option>
+            <option>Cuttack</option>
+            <option>Rourkela</option>
+            <option>Berhampur</option>
+            <option>Puri</option>
+        </select>
+        <div class="error" id="cityErr"></div>
+    </div>
+    <div class="row">
+        <label>Add Gift<i>(Optional)</i></label>
+        <div class="form-inline">
+            <label><input type="checkbox" name="movie[]" value="gift">Boat</label>
+            <label><input type="checkbox" name="movie[]" value="gift">Jbl</label>
+            <label><input type="checkbox" name="movie[]" value="gift">Ipad</label>
+        </div>
+        <div class="error" id="giftErr"></div>
+    </div>
+    <div class="row">
+        <label>Payment type</label>
+        <div class="form-inline">
+        <label><input type="checkbox" name="payment[]" value="snaks">UPI</label>
+        <label><input type="checkbox" name="payment[]" value="snaks">CARD</label>
+        <label><input type="checkbox" name="payment[]" value="snaks">NETBANKING</label>
+        </div>
+        <div class="error" id="paymentErr"></div>
+    </div>
+    <div class="row">
+        <input type="submit" value="Pay now">
+    </div>
+</form>
+</body>
+</html>
